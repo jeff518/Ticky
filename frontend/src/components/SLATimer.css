@@ -1,0 +1,13 @@
+.sla-timer {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.sla-timer.breached {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
