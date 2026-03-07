@@ -67,11 +67,22 @@ db.exec(`
     description TEXT NOT NULL,
     attachment_path TEXT,
     category TEXT NOT NULL,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    urgency TEXT NOT NULL,
+    assigned_team TEXT NOT NULL,
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
     subcategory TEXT,
     urgency TEXT NOT NULL,
     assigned_team TEXT NOT NULL,
     assigned_agent_id TEXT,
     assigned_agent_name TEXT,
+<<<<<<< HEAD
+=======
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
     status TEXT DEFAULT 'Open' CHECK(status IN ('Open', 'Assigned', 'In Progress', 'Resolved', 'Escalated', 'SLA Breached')),
     created_at TEXT DEFAULT (datetime('now')),
     assigned_at TEXT,
@@ -138,6 +149,11 @@ try {
   runUserRoleMigration();
 } catch (_) {}
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 // Migration: add ticket subcategory column
 const runTicketSubcategoryMigration = () => {
   try {
@@ -161,6 +177,10 @@ try {
   runTicketAssignmentMigration();
 } catch (_) {}
 
+<<<<<<< HEAD
+=======
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 // Don't save on schema - avoid overwriting with empty DB
 if (!fs.existsSync(dbPath)) save();
 

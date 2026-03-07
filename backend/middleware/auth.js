@@ -1,5 +1,12 @@
 import jwt from 'jsonwebtoken';
+<<<<<<< HEAD
 import { db } from '../db.js';
+=======
+<<<<<<< HEAD
+=======
+import { db } from '../db.js';
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 
 const JWT_SECRET = process.env.JWT_SECRET || 'ticky-secret-key-change-in-production';
 
@@ -11,8 +18,17 @@ export function authMiddleware(req, res, next) {
   try {
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, JWT_SECRET);
+<<<<<<< HEAD
     const dbUser = db.prepare('SELECT id, name, email, role, team FROM users WHERE id = ?').get(decoded.id);
     req.user = dbUser || decoded;
+=======
+<<<<<<< HEAD
+    req.user = decoded;
+=======
+    const dbUser = db.prepare('SELECT id, name, email, role, team FROM users WHERE id = ?').get(decoded.id);
+    req.user = dbUser || decoded;
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
     next();
   } catch (err) {
     return res.status(401).json({ error: 'Invalid token' });

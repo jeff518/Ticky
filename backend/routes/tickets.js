@@ -8,7 +8,14 @@ import { classifyTicket } from '../services/classificationEngine.js';
 import { routeTicket } from '../services/routingEngine.js';
 import { getSLADeadline, checkSLABreached } from '../services/slaService.js';
 import { escalateTicket } from '../services/escalationService.js';
+<<<<<<< HEAD
 import { getSubjectKeywordOptions } from '../services/ticketTaxonomy.js';
+=======
+<<<<<<< HEAD
+=======
+import { getSubjectKeywordOptions } from '../services/ticketTaxonomy.js';
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const uploadsDir = path.join(__dirname, '../uploads');
@@ -18,6 +25,15 @@ const router = express.Router();
 
 // Preview classification (no auth required for preview)
 router.post('/preview', (req, res) => {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  const { description } = req.body || {};
+  const { category, urgency } = classifyTicket(description);
+  const assigned_team = routeTicket(category);
+  res.json({ category, urgency, assigned_team });
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
   const { subject = '', description = '' } = req.body || {};
   const text = `${subject} ${description}`.trim();
   const { category, subcategory, urgency } = classifyTicket(text);
@@ -28,6 +44,10 @@ router.post('/preview', (req, res) => {
 router.get('/subject-options', (req, res) => {
   const options = getSubjectKeywordOptions();
   res.json({ options });
+<<<<<<< HEAD
+=======
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 });
 
 router.use(authMiddleware);
@@ -37,6 +57,13 @@ function addStatusHistory(ticketId, status, notes = '') {
     .run(ticketId, status, notes);
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+router.post('/', upload.single('attachment'), (req, res) => {
+  let { name, email, department, subject, description } = req.body;
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 function canManagerAccessCategory(req, category) {
   if (req.user?.role !== 'Manager') return true;
   return req.user?.team === category;
@@ -54,6 +81,10 @@ router.post('/', upload.single('attachment'), (req, res) => {
     getSubjectKeywordOptions().map(s => s.trim().toLowerCase())
   );
   const normalizedSubject = String(subject || '').trim().toLowerCase();
+<<<<<<< HEAD
+=======
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
   if (req.user?.role === 'User') {
     name = req.user.name;
     email = req.user.email;
@@ -61,21 +92,45 @@ router.post('/', upload.single('attachment'), (req, res) => {
   if (!name || !email || !department || !subject || !description) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  const id = 'TKT-' + Date.now();
+  const { category, urgency } = classifyTicket(description);
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
   if (!allowedSubjects.has(normalizedSubject)) {
     return res.status(400).json({ error: 'Subject must be selected from the allowed keyword list' });
   }
   const id = 'TKT-' + Date.now();
   const { category, subcategory, urgency } = classifyTicket(`${subject} ${description}`.trim());
+<<<<<<< HEAD
+=======
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
   const assigned_team = routeTicket(category);
   const sla_deadline = getSLADeadline(urgency);
   const attachment_path = req.file ? req.file.path : null;
 
   db.prepare(`
     INSERT INTO tickets (id, name, email, department, subject, description, attachment_path,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+      category, urgency, assigned_team, status, assigned_at, sla_deadline)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Open', datetime('now'), ?)
+  `).run(id, name, email, department, subject, description, attachment_path,
+    category, urgency, assigned_team, sla_deadline.toISOString());
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
       category, subcategory, urgency, assigned_team, status, assigned_at, sla_deadline)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Open', datetime('now'), ?)
   `).run(id, name, email, department, subject, description, attachment_path,
     category, subcategory, urgency, assigned_team, sla_deadline.toISOString());
+<<<<<<< HEAD
+=======
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 
   addStatusHistory(id, 'Open', 'Ticket created');
 
@@ -103,6 +158,11 @@ router.get('/', (req, res) => {
   let sql = 'SELECT * FROM tickets WHERE 1=1';
   const params = [];
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
   if (req.user?.role === 'Manager') {
     sql += ' AND category = ?';
     params.push(req.user.team);
@@ -111,6 +171,10 @@ router.get('/', (req, res) => {
     params.push(req.user.id, req.user.team);
   }
 
+<<<<<<< HEAD
+=======
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
   if (status) { sql += ' AND status = ?'; params.push(status); }
   if (category) { sql += ' AND category = ?'; params.push(category); }
   if (urgency) { sql += ' AND urgency = ?'; params.push(urgency); }
@@ -129,6 +193,17 @@ router.get('/', (req, res) => {
   res.json(tickets);
 });
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+router.get('/assigned/:team', (req, res) => {
+  const tickets = db.prepare('SELECT * FROM tickets WHERE assigned_team = ? ORDER BY sla_deadline ASC')
+    .all(decodeURIComponent(req.params.team));
+  res.json(tickets);
+});
+
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 router.get('/assigned/me', (req, res) => {
   if (req.user?.role !== 'Agent') return res.status(403).json({ error: 'Forbidden' });
   const tickets = db.prepare(`
@@ -172,6 +247,10 @@ router.get('/agents', requireRole('Manager', 'Admin'), (req, res) => {
   res.json(agents);
 });
 
+<<<<<<< HEAD
+=======
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 router.get('/stats', requireRole('Admin'), (req, res) => {
   const total = db.prepare('SELECT COUNT(*) as c FROM tickets').get().c;
   const critical = db.prepare("SELECT COUNT(*) as c FROM tickets WHERE urgency = 'Critical'").get().c;
@@ -189,9 +268,18 @@ router.get('/:id', (req, res) => {
   if (req.user?.role === 'User' && ticket.email !== req.user.email) {
     return res.status(403).json({ error: 'Forbidden' });
   }
+<<<<<<< HEAD
   if (!canManagerAccessCategory(req, ticket.category) || !canAgentAccessTicket(req, ticket)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
+=======
+<<<<<<< HEAD
+=======
+  if (!canManagerAccessCategory(req, ticket.category) || !canAgentAccessTicket(req, ticket)) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
   const history = db.prepare('SELECT * FROM ticket_status_history WHERE ticket_id = ? ORDER BY changed_at')
     .all(req.params.id);
   const escalations = db.prepare('SELECT * FROM escalations WHERE ticket_id = ? ORDER BY escalated_at')
@@ -207,9 +295,18 @@ router.patch('/:id/status', (req, res) => {
   }
   const ticket = db.prepare('SELECT * FROM tickets WHERE id = ?').get(req.params.id);
   if (!ticket) return res.status(404).json({ error: 'Not found' });
+<<<<<<< HEAD
   if (!canManagerAccessCategory(req, ticket.category) || !canAgentAccessTicket(req, ticket)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
+=======
+<<<<<<< HEAD
+=======
+  if (!canManagerAccessCategory(req, ticket.category) || !canAgentAccessTicket(req, ticket)) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 
   db.prepare('UPDATE tickets SET status = ? WHERE id = ?').run(status, req.params.id);
   addStatusHistory(req.params.id, status);
@@ -227,9 +324,18 @@ router.delete('/:id', (req, res) => {
   if (req.user?.role === 'User' && ticket.email !== req.user.email) {
     return res.status(403).json({ error: 'Forbidden' });
   }
+<<<<<<< HEAD
   if (!canManagerAccessCategory(req, ticket.category) || !canAgentAccessTicket(req, ticket)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
+=======
+<<<<<<< HEAD
+=======
+  if (!canManagerAccessCategory(req, ticket.category) || !canAgentAccessTicket(req, ticket)) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 
   db.prepare('DELETE FROM ticket_status_history WHERE ticket_id = ?').run(req.params.id);
   db.prepare('DELETE FROM escalations WHERE ticket_id = ?').run(req.params.id);
@@ -242,9 +348,18 @@ router.patch('/:id/override', requireRole('Manager', 'Admin'), (req, res) => {
   const { urgency, assigned_team } = req.body;
   const ticket = db.prepare('SELECT * FROM tickets WHERE id = ?').get(req.params.id);
   if (!ticket) return res.status(404).json({ error: 'Not found' });
+<<<<<<< HEAD
   if (!canManagerAccessCategory(req, ticket.category)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
+=======
+<<<<<<< HEAD
+=======
+  if (!canManagerAccessCategory(req, ticket.category)) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 
   if (urgency) {
     const sla = getSLADeadline(urgency, ticket.created_at);
@@ -258,6 +373,11 @@ router.patch('/:id/override', requireRole('Manager', 'Admin'), (req, res) => {
   res.json(updated);
 });
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 router.patch('/:id/assign-agent', requireRole('Manager', 'Admin'), (req, res) => {
   const { agentId } = req.body || {};
   if (!agentId) return res.status(400).json({ error: 'agentId is required' });
@@ -280,6 +400,10 @@ router.patch('/:id/assign-agent', requireRole('Manager', 'Admin'), (req, res) =>
   res.json(updated);
 });
 
+<<<<<<< HEAD
+=======
+>>>>>>> fb8869bc (Second Commit)
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 setInterval(() => {
   const open = db.prepare("SELECT * FROM tickets WHERE status IN ('Open', 'Assigned', 'In Progress')").all();
   for (const t of open) {

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useState, useEffect, useCallback, useMemo } from 'react';
+=======
+import { useState, useEffect, useCallback } from 'react';
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import UrgencyBadge from '../components/UrgencyBadge';
@@ -15,6 +19,7 @@ export default function TicketForm() {
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
   const [attachment, setAttachment] = useState(null);
+<<<<<<< HEAD
   const [subjectOptions, setSubjectOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -24,20 +29,38 @@ export default function TicketForm() {
   const fetchPreview = useCallback(async (subj, desc) => {
     if (!subj?.trim() && !desc?.trim()) {
       setPreview({ category: null, subcategory: null, urgency: null, assigned_team: null });
+=======
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [preview, setPreview] = useState({ category: null, urgency: null, assigned_team: null });
+  const navigate = useNavigate();
+
+  const fetchPreview = useCallback(async (desc) => {
+    if (!desc?.trim()) {
+      setPreview({ category: null, urgency: null, assigned_team: null });
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
       return;
     }
     try {
       const res = await fetch('/api/tickets/preview', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+<<<<<<< HEAD
         body: JSON.stringify({ subject: subj, description: desc })
+=======
+        body: JSON.stringify({ description: desc })
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
       });
       if (res.ok) {
         const data = await res.json();
         setPreview(data);
       }
     } catch {
+<<<<<<< HEAD
       setPreview({ category: null, subcategory: null, urgency: null, assigned_team: null });
+=======
+      setPreview({ category: null, urgency: null, assigned_team: null });
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
     }
   }, []);
 
@@ -47,6 +70,7 @@ export default function TicketForm() {
   }, [user?.name, user?.email]);
 
   useEffect(() => {
+<<<<<<< HEAD
     fetch('/api/tickets/subject-options')
       .then(res => (res.ok ? res.json() : { options: [] }))
       .then(data => setSubjectOptions(Array.isArray(data?.options) ? data.options : []))
@@ -62,15 +86,23 @@ export default function TicketForm() {
     const id = setTimeout(() => fetchPreview(subject, description), 400);
     return () => clearTimeout(id);
   }, [subject, description, fetchPreview]);
+=======
+    const id = setTimeout(() => fetchPreview(description), 400);
+    return () => clearTimeout(id);
+  }, [description, fetchPreview]);
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+<<<<<<< HEAD
     const normalizedSubject = subject.trim().toLowerCase();
     if (!allowedSubjects.has(normalizedSubject)) {
       setError('Please choose a subject from the approved keyword list.');
       return;
     }
+=======
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
     setLoading(true);
     try {
       const formData = new FormData();
@@ -103,7 +135,11 @@ export default function TicketForm() {
   return (
     <div className="ticket-form-page">
       <h1>Submit Ticket</h1>
+<<<<<<< HEAD
       <p className="subtitle">Ticket ID, category, subcategory, urgency, and team are automatically assigned from your subject and description</p>
+=======
+      <p className="subtitle">Ticket ID, urgency, and team are automatically assigned based on your description</p>
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
       <form onSubmit={handleSubmit} className="ticket-form">
         {error && <div className="form-error">{error}</div>}
         {!isUser && (
@@ -138,6 +174,7 @@ export default function TicketForm() {
           </select>
         </div>
         <div className="form-row">
+<<<<<<< HEAD
           <label>Subject * (search and choose from keywords)</label>
           <input
             type="text"
@@ -150,6 +187,16 @@ export default function TicketForm() {
           <datalist id="subject-keyword-options">
             {subjectOptions.map(opt => <option key={opt} value={opt} />)}
           </datalist>
+=======
+          <label>Subject *</label>
+          <input
+            type="text"
+            value={subject}
+            onChange={e => setSubject(e.target.value)}
+            required
+            placeholder="Brief summary"
+          />
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
         </div>
         <div className="form-row">
           <label>Description *</label>
@@ -160,12 +207,20 @@ export default function TicketForm() {
             rows={5}
             placeholder="Describe your issue in detail..."
           />
+<<<<<<< HEAD
           {(subject.trim() || description.trim()) && (preview.category || preview.subcategory || preview.urgency || preview.assigned_team) && (
             <div className="auto-assign-preview">
               <span className="preview-label">Auto-assigned from your subject and description:</span>
               <div className="preview-badges">
                 <span className="preview-item"><strong>Category:</strong> {preview.category}</span>
                 <span className="preview-item"><strong>Subcategory:</strong> {preview.subcategory}</span>
+=======
+          {description.trim() && (preview.category || preview.urgency || preview.assigned_team) && (
+            <div className="auto-assign-preview">
+              <span className="preview-label">Auto-assigned from your description:</span>
+              <div className="preview-badges">
+                <span className="preview-item"><strong>Category:</strong> {preview.category}</span>
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
                 <span className="preview-item"><strong>Urgency:</strong> <UrgencyBadge urgency={preview.urgency} /></span>
                 <span className="preview-item"><strong>Team:</strong> {preview.assigned_team}</span>
               </div>

@@ -1,6 +1,12 @@
 node_modules/
+<<<<<<< HEAD
 .env
 dist/
 uploads/
 .DS_Store
+=======
+backend/node_modules/
+dist/
+.env
+>>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 *.log
