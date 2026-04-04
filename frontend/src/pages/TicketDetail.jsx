@@ -8,11 +8,7 @@ import SLATimer from '../components/SLATimer';
 import './TicketDetail.css';
 
 const STATUSES = ['Assigned', 'In Progress', 'Resolved'];
-<<<<<<< HEAD
 const TEAMS = ['IT Support Team', 'Finance Team', 'Billing Team', 'Customer Support', 'Security Team', 'Product Team'];
-=======
-const TEAMS = ['IT Support Team', 'Finance Team', 'Customer Support', 'Security Team', 'Product Team'];
->>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
 
 export default function TicketDetail() {
   const { id } = useParams();
@@ -132,17 +128,12 @@ export default function TicketDetail() {
               <dd>{ticket.department}</dd>
               <dt>Category</dt>
               <dd>{ticket.category}</dd>
-<<<<<<< HEAD
               <dt>Subcategory</dt>
               <dd>{ticket.subcategory || '-'}</dd>
               <dt>Assigned Team</dt>
               <dd>{ticket.assigned_team}</dd>
               <dt>Assigned Agent</dt>
               <dd>{ticket.assigned_agent_name || '-'}</dd>
-=======
-              <dt>Assigned Team</dt>
-              <dd>{ticket.assigned_team}</dd>
->>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
               {ticket.attachment_path && (
                 <>
                   <dt>Attachment</dt>

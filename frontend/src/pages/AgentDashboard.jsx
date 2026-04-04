@@ -11,15 +11,7 @@ export default function AgentDashboard() {
   const [tickets, setTickets] = useState([]);
 
   const load = () => {
-<<<<<<< HEAD
     api('/tickets/assigned/me').then(r => r.json()).then(setTickets);
-=======
-    if (user?.team) {
-      api(`/tickets/assigned/${encodeURIComponent(user.team)}`).then(r => r.json()).then(setTickets);
-    } else {
-      api('/tickets?status=Assigned').then(r => r.json()).then(setTickets);
-    }
->>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
   };
 
   useEffect(() => { load(); }, [user?.team]);
@@ -73,10 +65,7 @@ export default function AgentDashboard() {
                 <th>ID</th>
                 <th>Subject</th>
                 <th>Category</th>
-<<<<<<< HEAD
                 <th>Subcategory</th>
-=======
->>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
                 <th>Urgency</th>
                 <th>Status</th>
                 <th>SLA Countdown</th>
@@ -91,10 +80,7 @@ export default function AgentDashboard() {
                     <Link to={`/tickets/${t.id}`} className="subject-link">{t.subject}</Link>
                   </td>
                   <td>{t.category}</td>
-<<<<<<< HEAD
                   <td>{t.subcategory || '-'}</td>
-=======
->>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
                   <td><UrgencyBadge urgency={t.urgency} /></td>
                   <td><StatusBadge status={t.status} /></td>
                   <td><SLATimer deadline={t.sla_deadline} status={t.status} /></td>

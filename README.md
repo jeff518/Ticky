@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ticky – Enterprise Helpdesk
 
 Electron desktop app for ticket triage with automated classification, routing, SLA tracking, and escalation.
@@ -90,3 +91,8 @@ kaizen/
 - `GET /api/tickets/stats` – Admin stats
 - `GET /api/tickets/assigned/:team` – By team
 - `GET /api/notifications` – Notifications
+=======
+# Ticky
+Ticky is a high-speed IT ops engine that replaces ticket chaos with logic-driven automation. It uses real-time pattern matching and Kafka-based routing to ensure instant triage and 100% SLA compliance. No more manual sorting—just fast, predictable incident resolution.
+# more futures added soon
+>>>>>>> 00c6ea112219256e285fb59cf9cd413f0601c4c7
