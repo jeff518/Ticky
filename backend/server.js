@@ -14,13 +14,6 @@ import { db } from './db.js';
 function ensureSeed() {
   const defaults = [
     { name: 'Admin User', email: 'admin@ticky.com', password: 'admin123', role: 'Admin', team: null },
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    { name: 'IT Agent', email: 'agent@ticky.com', password: 'agent123', role: 'Agent', team: 'IT Support Team' },
-    { name: 'Manager User', email: 'manager@ticky.com', password: 'manager123', role: 'Manager', team: null },
-=======
->>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
     { name: 'IT Manager', email: 'it.manager@ticky.com', password: 'manager123', role: 'Manager', team: 'IT Department' },
     { name: 'Finance Manager', email: 'finance.manager@ticky.com', password: 'manager123', role: 'Manager', team: 'Finance Department' },
     { name: 'Security Manager', email: 'security.manager@ticky.com', password: 'manager123', role: 'Manager', team: 'Security Department' },
@@ -31,10 +24,6 @@ function ensureSeed() {
     { name: 'Security Agent', email: 'security.agent@ticky.com', password: 'agent123', role: 'Agent', team: 'Security Team' },
     { name: 'Customer Agent', email: 'cs.agent@ticky.com', password: 'agent123', role: 'Agent', team: 'Customer Support' },
     { name: 'Billing Agent', email: 'billing.agent@ticky.com', password: 'agent123', role: 'Agent', team: 'Billing Team' },
-<<<<<<< HEAD
-=======
->>>>>>> fb8869bc (Second Commit)
->>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
     { name: 'End User', email: 'user@ticky.com', password: 'user123', role: 'User', team: null }
   ];
   for (const u of defaults) {

@@ -58,13 +58,9 @@ export default function Login() {
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
-<<<<<<< HEAD
         <p className="login-hint">
           Admin: admin@ticky.com / admin123 | IT Manager: it.manager@ticky.com / manager123 | IT Agent: it.agent@ticky.com / agent123 | User: user@ticky.com / user123
         </p>
-=======
-        <p className="login-hint">Admin: admin@ticky.com / admin123 | User: user@ticky.com / user123</p>
->>>>>>> 30dfe3f28086f4750f83352912032e5956f2437b
       </div>
     </div>
   );
